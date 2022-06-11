@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N= 1e5+10;
+vector<int> graph[N];//vector of array
+bool visited[N];
+
+void dfs(int vertex)
+{   // take action on vertex after entering vertex
+    visited[vertex]=true;
+    cout<<"Vertex"<<vertex<<endl;
+    for(int child : graph[vertex])
+    {
+        cout<<"vertex  "<<vertex<<"  child  "<<child<<endl;
+        if(visited[child]==true)
+        continue;
+        //take action on child before entering child
+        dfs(child);
+        //take action on child after exiting child
+    }
+    // take action on vertex before exiting vertex
+}
+
+
+
+int main()
+{
+    int n,m; // n-- vertices m-- edges
+    cin>>n>>m;
+    for(int i=0;i<n;i++)
+    {
+        int v1,v2;
+        cin>>v1>>v2;
+        graph[v1].push_back(v2);
+        graph[v2].push_back(v1);
+    }
+    dfs(graph[0][1]);
+    
+}
