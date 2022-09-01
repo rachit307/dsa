@@ -1,0 +1,93 @@
+class Solution{
+    public:
+    bool isSafe(vector<vector<int>> m,int x,int y,int n,vector<vector<int>>vis)
+    {
+        if((x>=0 && x<n) && (y>=0 && y<n) && vis[x][y]==0 && m[x][y]==1)
+            return true;
+        else
+            return false;
+    }
+    
+    
+    void solve(vector<vector<int>> m,vector<string> &ans,string path,int x,int y,int n,vector<vector<int>>vis){
+        int x1,y1;
+        if(x==n-1 && y==n-1)
+        {
+            ans.push_back(path);
+            return;
+        }
+        vis[x][y]=1;
+        
+        //down
+        x1=x+1;
+        y1=y;
+        if(isSafe(m,x1,y1,n,vis))
+        {
+            path.push_back('D');
+            solve(m,ans,path,x1,y1,n,vis);
+            path.pop_back();
+        }
+        
+        //up
+        x1=x-1;
+        y1=y;
+        if(isSafe(m,x1,y1,n,vis))
+        {
+            path.push_back('U');
+            solve(m,ans,path,x1,y1,n,vis);
+            path.pop_back();
+        }
+        
+        //left
+        x1=x;
+        y1=y-1;
+        if(isSafe(m,x1,y1,n,vis))
+        {
+            path.push_back('L');
+            solve(m,ans,path,x1,y1,n,vis);
+            path.pop_back();
+        }
+        
+        
+        //right
+        x1=x;
+        y1=y+1;
+        if(isSafe(m,x1,y1,n,vis))
+        {
+            path.push_back('R');
+            solve(m,ans,path,x1,y1,n,vis);
+            path.pop_back();
+        }
+        
+        
+        
+        
+        vis[x][y]=0;
+    }
+    
+    
+    vector<string> findPath(vector<vector<int>> &m, int n) {
+        // Your code goes here
+        
+        vector<string> ans;
+        if(m[0][0]==0){
+            return ans;
+        }
+        int x=0;
+        int y=0;
+        vector<vector<int>>vis;
+        vis=m;
+        //visited array
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++){
+                vis[i][j]=0;
+            }
+        }
+        
+        string path="";
+        solve(m,ans,path,x,y,n,vis);
+        sort(ans.begin(),ans.end());
+        return ans;
+    }
+};
